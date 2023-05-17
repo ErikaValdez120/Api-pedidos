@@ -1,0 +1,4 @@
+DataAccessRegistry:
+  ReadOnlyConnection: "Data Source=NB101388;Initial Catalog=Pedido;User ID=sa;Password=Andreani"
+  TransactionalConnection: "Data Source=NB101388;Initial Catalog=Pedido;User ID=sa;Password=Andreani"
+  ProviderName: System.Data.SqlClient
