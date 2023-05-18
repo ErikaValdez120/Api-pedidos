@@ -18,13 +18,13 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Update
     public class UpdatePedidoCommand : IRequest<Response<string>>
     {
         public Guid id { get; set; }
-        public int NumeroPedido { get; set; }
-        public Guid cicloDePedido { get; set; }
+        public int numeroDePedido { get; set; }
+        public string cicloDelPedido { get; set; }
 
-        public int CodigoDeContratoInterno { get; set; }
-        public int EstadoDelPedido { get; set; }
-        public int CuentaCorriente { get; set; }    
-        public DateOnly cuando { get; set; }
+        public Int64 codigoDeContratoInterno { get; set; }
+        public int? estadoDelPedido { get; set; }
+        public string cuentaCorriente { get; set; }    
+        public DateTime cuando { get; set; }
     }
     }
     public class UpdatePedidoHandler : IRequestHandler<UpdatePedidoCommand, Response<string>>
@@ -42,20 +42,20 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Update
 
         public async Task<Response<string>> Handle(UpdatePedidoCommand request, CancellationToken cancellationToken)
         {
-            var pedido = await _query.GetByIdAsync<Pedido>(nameof(request.NumeroPedido), request.NumeroPedido);
+            var pedido = await _query.GetByIdAsync<Pedido>(nameof(request.numeroDePedido), request.numeroDePedido);
             var response = new Response<string>();
             if (pedido is null)
             {
-                response.AddNotification("#3123", nameof(request.NumeroPedido), string.Format(ErrorMessage.NOT_FOUND_RECORD, "Pedido", request.NumeroPedido));
+                response.AddNotification("#3123", nameof(request.numeroDePedido), string.Format(ErrorMessage.NOT_FOUND_RECORD, "Pedido", request.numeroDePedido));
                 response.StatusCode = System.Net.HttpStatusCode.NotFound;
                 return response;
             }
-        //    pedido.id = request.Id ;
-            pedido.numeroDePedido = request.NumeroPedido;
-          //  pedido.cicloDePedido = request.CicloDePedido;
-            pedido.codigoDeContratoInterno = request.CodigoDeContratoInterno;
-            pedido.estadoDelPedido = request.EstadoDelPedido;
-            //pedido.cuando = request.Cuando;
+            pedido.id = request.id ;
+            pedido.numeroDePedido = request.numeroDePedido;
+            pedido.cicloDelPedido = request.cicloDelPedido;
+            pedido.codigoDeContratoInterno = request.codigoDeContratoInterno;
+            pedido.estadoDelPedido = request.estadoDelPedido;
+            pedido.cuando = request.cuando;
 
             _repository.Update(pedido);
             await _repository.SaveChangeAsync();

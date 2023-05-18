@@ -29,7 +29,7 @@ public class PedidoController : ApiControllerBase
     [ProducesResponseType(typeof(List<Notify>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(CreatePedidoCommand body) => Result(await Mediator.Send(body));
 
-/*
+
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(List<Notify>), StatusCodes.Status400BadRequest)]
@@ -38,14 +38,17 @@ public class PedidoController : ApiControllerBase
     {
         return Result(await Mediator.Send(new UpdatePedidoCommand
         {
-            id= idPedido,
-            NumeroPedido =body.numeroPedido,
-            cicloDePedido=body.cicloDePedido,
-            CodigoDeContratoInterno = body.codigoDeContratoInterno,
-            EstadoDelPedido = body.estadoDelPedido 
+            id = idPedido,
+            numeroDePedido = body.numeroDePedido,
+            cicloDelPedido = body.cicloDelPedido,
+            codigoDeContratoInterno = body.codigoDeContratoInterno,
+            estadoDelPedido = body.estadoDelPedido,
+            cuentaCorriente = body.cuentaCorriente,
+            cuando = body.cuando
+        
         }));
     }
-*/
+
 }
 
 
