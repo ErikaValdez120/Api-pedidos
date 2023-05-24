@@ -2,3 +2,11 @@ DataAccessRegistry:
   ReadOnlyConnection: "Data Source=NB101388;Initial Catalog=Pedido;User ID=sa;Password=Andreani"
   TransactionalConnection: "Data Source=NB101388;Initial Catalog=Pedido;User ID=sa;Password=Andreani"
   ProviderName: System.Data.SqlClient
+AMQStreams:
+
+  BootstrapServer: "SSL://cluster-kafka-bootstrap-amq-streams-test.apps.ocptest.andreani.com.ar:443"
+  SchemaUrl: "http://apicurioregistry.apps.ocptest.andreani.com.ar/apis/ccompat/v6"
+  Protocol: Ssl
+  AutoOffsetReset: Earliest
+  AutoRegisterSchemas: true
+  MaxRetry: 3

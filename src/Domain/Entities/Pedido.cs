@@ -15,7 +15,7 @@ namespace api_pedidos.Domain.Entities
         public string cicloDelPedido { get; set; }
         public Int64 codigoDeContratoInterno { get; set; }
         public int? estadoDelPedido { get; set; }
-        public string cuentaCorriente { get; set; }
+        public int cuentaCorriente { get; set; }
         public DateTime cuando { get; set; }
     }
 }
