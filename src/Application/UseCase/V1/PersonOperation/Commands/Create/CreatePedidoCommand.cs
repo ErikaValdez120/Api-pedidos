@@ -67,8 +67,9 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Create
             evento.codigoDeContratoInterno = entity.codigoDeContratoInterno;
             evento.cuando = entity.cuando.ToString();
             evento.numeroDePedido = 0;
+            evento.estadoDelPedido = entity.estadoDelPedido.ToString();
 
-
+            // Publicación del objeto "evento" en el topic "PedidoCreado" utilizando el método _publish.To
 
             await _publish.To<Andreani.Scheme.Onboarding.Pedido>(evento, entity.id.ToString(), "PedidoCreado");
 
@@ -80,12 +81,7 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Create
 
                     Message= "Success",
                     PedidoId=entity.id
-                        /*
-
-                    cuentaCorriente = entity.cuentaCorriente,
-                    
-                    codigoDeContratoInterno= entity.codigoDeContratoInterno,
-                        */                 
+                             
                 },
                 StatusCode = System.Net.HttpStatusCode.Created
             };
