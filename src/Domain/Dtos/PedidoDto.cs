@@ -15,8 +15,8 @@ namespace api_pedidos.Domain.Dtos
             string cicloDelPedido,
             Int64 codigoDeContratoInterno,
             int? estadoDelPedido,
-            string cuentaCorriente,
-            DateTime Cuando
+            int cuentaCorriente,
+            DateTime cuando
            ){ }
    
 }

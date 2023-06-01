@@ -19,9 +19,11 @@ namespace Controllers.V2;
 [Route("api/v{version:apiVersion}/[controller]")]
 public class PedidoController : ApiControllerBase
 {
+
     [HttpGet]
     [ProducesResponseType(typeof(List<PedidoDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(List<Notify>), StatusCodes.Status400BadRequest)]
+    
     public async Task<IActionResult> Get() => Result(await Mediator.Send(new ListPedido()));
 
     [HttpPost]
@@ -29,6 +31,11 @@ public class PedidoController : ApiControllerBase
     [ProducesResponseType(typeof(List<Notify>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(CreatePedidoCommand body) => Result(await Mediator.Send(body));
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(Guid id) => this.Result(await Mediator.Send(new GetPedido() { Id = id }));
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id) => this.Result(await Mediator.Send(new DeletePedido() { Id = id }));
 
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -48,6 +55,8 @@ public class PedidoController : ApiControllerBase
         
         }));
     }
+
+
 
 }
 

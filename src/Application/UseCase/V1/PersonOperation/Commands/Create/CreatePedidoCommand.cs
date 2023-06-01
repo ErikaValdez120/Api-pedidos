@@ -49,10 +49,10 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Create
 
                 cuentaCorriente = request.cuentaCorriente,
                 codigoDeContratoInterno = request.codigoDeContratoInterno,
-                cuando=DateTime.Now,
+                cuando = DateTime.Now,
                 numeroDePedido = null,
-                id=Guid.NewGuid(),
-                estadoDelPedido=1
+                id = Guid.NewGuid(),
+                estadoDelPedido = 1
             };
             entity.cicloDelPedido = entity.id.ToString();
             _repository.Insert(entity);
@@ -79,8 +79,9 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Create
                 Content = new CreatePedidoResponse
                 {
 
-                    Message= "Success",
-                    PedidoId=entity.id
+                    Message = "Success",
+                    PedidoId = entity.id,
+                    
                              
                 },
                 StatusCode = System.Net.HttpStatusCode.Created
