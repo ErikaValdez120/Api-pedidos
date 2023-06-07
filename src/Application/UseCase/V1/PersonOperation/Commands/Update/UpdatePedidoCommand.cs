@@ -5,6 +5,7 @@ using api_pedidos.Domain.Common;
 using api_pedidos.Domain.Dtos;
 using api_pedidos.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -15,19 +16,11 @@ using System.Threading.Tasks;
 
 namespace api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Update
 {
-    public class UpdatePedidoCommand : IRequest<Response<string>>
+    public class UpdatePedidoCommand : IRequest<SendPedido>
     {
-        public Guid id { get; set; }
-        public int numeroDePedido { get; set; }
-        public string cicloDelPedido { get; set; }
-
-        public Int64 codigoDeContratoInterno { get; set; }
-        public int? estadoDelPedido { get; set; }
-        public string cuentaCorriente { get; set; }    
-        public DateTime cuando { get; set; }
+        public Andreani.Scheme.Onboarding.Pedido Pedido { get; set; }
     }
-    }
-    public class UpdatePedidoHandler : IRequestHandler<UpdatePedidoCommand, Response<string>>
+    public class UpdatePedidoHandler : IRequestHandler<UpdatePedidoCommand,SendPedido>
     {
         private readonly ITransactionalRepository _repository;
         private readonly IReadOnlyQuery _query;
@@ -40,28 +33,31 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Update
             _logger = logger;
         }
 
-        public async Task<Response<string>> Handle(UpdatePedidoCommand request, CancellationToken cancellationToken)
+        public async Task<SendPedido> Handle(UpdatePedidoCommand request, CancellationToken cancellationToken)
         {
-            var pedido = await _query.GetByIdAsync<Pedido>(nameof(request.numeroDePedido), request.numeroDePedido);
-            var response = new Response<string>();
-            if (pedido is null)
+            Andreani.Scheme.Onboarding.Pedido pedidoActualizado = request.Pedido;
+            var entidadPedido = new api_pedidos.Domain.Entities.Pedido()
             {
-                response.AddNotification("#3123", nameof(request.numeroDePedido), string.Format(ErrorMessage.NOT_FOUND_RECORD, "Pedido", request.numeroDePedido));
-                response.StatusCode = System.Net.HttpStatusCode.NotFound;
-                return response;
-            }
-            pedido.id = request.id ;
-            pedido.numeroDePedido = request.numeroDePedido;
-            pedido.cicloDelPedido = request.cicloDelPedido;
-            pedido.codigoDeContratoInterno = request.codigoDeContratoInterno;
-            pedido.estadoDelPedido = request.estadoDelPedido;
-            pedido.cuando = request.cuando;
-
-            _repository.Update(pedido);
+                id = Guid.Parse(pedidoActualizado.id),
+                numeroDePedido = pedidoActualizado.numeroDePedido,
+                cicloDelPedido = pedidoActualizado.cicloDelPedido,
+                codigoDeContratoInterno = pedidoActualizado.codigoDeContratoInterno,
+                estadoDelPedido = 2,
+                cuentaCorriente = (int)pedidoActualizado.cuentaCorriente,
+                cuando = DateTime.Parse(pedidoActualizado.cuando)
+            };
+            pedidoActualizado.estadoDelPedido = 2.ToString();
+            // _repository --> transaccion en la base de datos
+            _repository.Update(entidadPedido);
             await _repository.SaveChangeAsync();
-
-            return response;
+            return new SendPedido();
         }
+
     }
 
+    public class SendPedido
+    {
+    };
+
+}
 

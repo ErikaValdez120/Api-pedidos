@@ -15,6 +15,12 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Queries.GetList
     public record struct GetPedido : IRequest<Response<PedidoDto>>
     {
         public Guid Id { get; set; }
+
+        public GetPedido(Guid pedidoId)
+        {
+
+            Id = pedidoId;
+        }
     }
 
     public class GetPedidoHandler : IRequestHandler<GetPedido, Response<PedidoDto>>

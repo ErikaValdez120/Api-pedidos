@@ -26,28 +26,8 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Queries.GetList
         public async Task<Response<List<PedidoDto>>> Handle(ListPedido request, CancellationToken cancellationToken)
         {
             var result = await _query.GetAllAsync<PedidoDto>(nameof(Pedido)); // trae toda la lista pedidoDto
-            //hacer una lista con pedidoDto
-         /*
-            List<PedidoDto> resultadoPedidos=new List<PedidoDto>();
-            foreach (var pedido in result) {
-                var querySQL = $"select * from  dbo.EstadoDelPedido where id = '{pedido.EstadoDelPedido}'";
-                var resultEstadoDelPedido = await _query.FirstOrDefaultQueryAsync<EstadoDelPedido>(querySQL);
-                PedidoDto pedidoDto = new PedidoDto();
-                {
-                        Id = pedido.Id,
-                        NumeroDePedido = pedido.NumeroDePedido,
-                        codigoDeContratoInterno = pedido.CodigoDeContratoInterno,
-                        EstadoDelPedido = new EstadoDelPedido()
-                        {
-                            Id = resultEstadoDelPedido is null ? 1 : resultEstadoDelPedido.Id,
-                            Descripcion = resultEstadoDelPedido is null ? "Vacio" : resultEstadoDelPedido.Descripcion 
-                        },
-                        CuentaCorriente = pedido.CuentaCorriente,
-                        Cuando = pedido.Cuando.ToString("MM/dd/yyyy")
-                 };
-             resultadoPedidos.Add(pedidoDto);
-            }
-         */
+            
+         
             return new Response<List<PedidoDto>>
             {
                 //resultadoPedidos,

@@ -8,8 +8,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using api_pedidos.Application.UseCase.V1.PersonOperation.Queries.GetList;
 using api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Create;
-using api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Update;
-using WebApi.Models;
 using System;
 
 namespace Controllers.V2;
@@ -36,26 +34,6 @@ public class PedidoController : ApiControllerBase
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id) => this.Result(await Mediator.Send(new DeletePedido() { Id = id }));
-
-    [HttpPut("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(List<Notify>), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(List<Notify>), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Update(Guid idPedido, UpdatePedidoVm body)
-    {
-        return Result(await Mediator.Send(new UpdatePedidoCommand
-        {
-            id = idPedido,
-            numeroDePedido = body.numeroDePedido,
-            cicloDelPedido = body.cicloDelPedido,
-            codigoDeContratoInterno = body.codigoDeContratoInterno,
-            estadoDelPedido = body.estadoDelPedido,
-            cuentaCorriente = body.cuentaCorriente,
-            cuando = body.cuando
-        
-        }));
-    }
-
 
 
 }

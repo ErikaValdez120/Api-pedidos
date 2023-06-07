@@ -71,7 +71,7 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Create
 
             // Publicación del objeto "evento" en el topic "PedidoCreado" utilizando el método _publish.To
 
-            await _publish.To<Andreani.Scheme.Onboarding.Pedido>(evento, entity.id.ToString(), "PedidoCreado");
+            await _publish.To<Andreani.Scheme.Onboarding.Pedido>(evento, entity.id.ToString(), "PedidoCreadoV");
 
 
             return new Response<CreatePedidoResponse>
