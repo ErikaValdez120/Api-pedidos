@@ -11,7 +11,7 @@ using api_pedidos.Domain.Entities;
 using System.Threading;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-namespace api_pedidos.Application.UseCase.V1.PersonOperation.Queries.GetList
+namespace api_pedidos.Application.UseCase.V1.PersonOperation.Commands.Delete
 {
     public record struct DeletePedido : IRequest<Response<Pedido>>
     {
@@ -23,7 +23,7 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Queries.GetList
         private readonly IReadOnlyQuery _query;
         private readonly ITransactionalRepository _repository;
 
-        public DeLetePedidoHandler(ITransactionalRepository repository,IReadOnlyQuery query)
+        public DeLetePedidoHandler(ITransactionalRepository repository, IReadOnlyQuery query)
         {
             _repository = repository;
             _query = query;
@@ -31,13 +31,13 @@ namespace api_pedidos.Application.UseCase.V1.PersonOperation.Queries.GetList
 
         public async Task<Response<Pedido>> Handle(DeletePedido request, CancellationToken cancellationToken)
         {
-             var result = await _query.GetByIdAsync<Pedido>(nameof(request.Id), request.Id);
-              _repository.Delete<Pedido>(result);
+            var result = await _query.GetByIdAsync<Pedido>(nameof(request.Id), request.Id);
+            _repository.Delete(result);
             _repository.SaveChange();
-            
+
             return new Response<Pedido>
             {
-               
+
                 StatusCode = System.Net.HttpStatusCode.OK
             };
         }

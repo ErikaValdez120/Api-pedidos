@@ -27,7 +27,9 @@ public class PedidoController : ApiControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(CreatePedidoResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(List<Notify>), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create(CreatePedidoCommand body) => Result(await Mediator.Send(body));
+    public async Task<IActionResult> Create(CreatePedidoCommand body) => Result(await Mediator.Send(body)); 
+    // llamamos al Mediator con un request.La respuesta del mediator la pasamos por Result
+    //la respuesta del mediator la procesa y la devuelve en result.
 
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(Guid id) => this.Result(await Mediator.Send(new GetPedido() { Id = id }));
